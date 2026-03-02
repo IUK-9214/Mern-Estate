@@ -1,10 +1,15 @@
 import express from 'express'
-
+import dotenv from 'dotenv'
+import ConnectDB from './ConnectDataBase/ConnectDB.js'
 
 const app = express()
 
 
+dotenv.config()
+
 app.use(express())
+
+ConnectDB()
 
 app.get("/",(req,res)=>
 {
