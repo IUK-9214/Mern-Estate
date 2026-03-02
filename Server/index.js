@@ -1,22 +1,17 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import ConnectDB from './ConnectDataBase/ConnectDB.js'
-
-const app = express()
-
+import authrouter from './Router/auth.router.js'
 
 dotenv.config()
 
-app.use(express())
 
+const app = express()
+app.use(express.json())
 ConnectDB()
 
-app.get("/",(req,res)=>
-{
-    res.json({
-        msg:"i m a get request and on home page "
-    })
-})
+app.use('/api',authrouter)
+
 
 app.listen(5000,()=>{
 
