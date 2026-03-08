@@ -3,7 +3,7 @@ import bcryptjs from 'bcryptjs'
 
 
 
-export const  Singup =async(req,res)=>{
+export const  Singup =async(req,res, next)=>{
 
     try {
         const {username,email,password}=req.body
@@ -20,14 +20,11 @@ export const  Singup =async(req,res)=>{
         await newUser.save();
         return res.status(201).json({
             msg:"user is created successfull ",
-            success:false
+            success:true
         })
 
     } catch (error) {
-        return res.status(500).json({
-            msg:error.msg,
-            success:false
-        })
+       next(error);
     }
 
 }
