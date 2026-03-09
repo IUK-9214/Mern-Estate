@@ -1,5 +1,6 @@
 import User from "../Models/UserModel.js"
 import bcryptjs from 'bcryptjs'
+import { errorHandler } from "../utils/error.js"
 
 
 
@@ -12,6 +13,9 @@ export const  Singup =async(req,res, next)=>{
                 msg:"required username and email",
                 success:false
             })
+        }
+        if (password.length<8){
+             return next(errorHandler(400, "Password must be at least 8 characters"));
         }
 
         const hashpassword= bcryptjs.hashSync(password,10);
