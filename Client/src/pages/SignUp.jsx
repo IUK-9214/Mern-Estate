@@ -1,13 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 function SignUp() {
 
+  const [FormData,setFormData]=useState({})
 
   const HandleChange=(e)=>{
-    
+    setFormData({
+      ...FormData,
+      [e.target.id]:e.target.value,
+    })
   }
-
+const HandleSubmit=(e)=>{
+  e.preventDefault();
+  
+}
 
   return (
 
