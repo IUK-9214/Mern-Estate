@@ -5,7 +5,7 @@ function SignUp() {
 
   const [FormData,setFormData]=useState({})
   const [error ,setError]=useState(null);
-  const  
+  const  [loading,setLoading]=useState(false)
 
   const HandleChange=(e)=>{
     setFormData({
@@ -15,6 +15,7 @@ function SignUp() {
   }
 const HandleSubmit=async(e)=>{
   e.preventDefault();
+  setLoading(true)
 const res =await fetch('/api/auth/signup',{
   method:'POST',
   headers:{
@@ -23,7 +24,7 @@ const res =await fetch('/api/auth/signup',{
   body:JSON.stringify(FormData),
 });
 const data=await res.json();
-console.log(data)
+
 
 }
 
