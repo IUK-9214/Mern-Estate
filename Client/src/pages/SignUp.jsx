@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
+
 
 function SignUp() {
 
   const [FormData,setFormData]=useState({})
   const [error ,setError]=useState(null);
   const  [loading,setLoading]=useState(false)
+const navigate =useNavigate();
 
   const HandleChange=(e)=>{
     setFormData({
@@ -31,7 +33,8 @@ if(data.success===false){
   return;
 }
 setLoading(false)
-
+setError(null)
+navigate('/sign-in');
  } catch (error) {
   setLoading(false);
   setError(error.message); 
@@ -48,13 +51,13 @@ setLoading(false)
         <input  onChange={HandleChange}  type="text" placeholder='UserName' className='border p-3 rounded-lg' id='username' />
         <input onChange={HandleChange}  type="email" placeholder='Email' className='border p-3 rounded-lg' id='email' />
         <input  onChange={HandleChange} type="password" placeholder='Password' className='border p-3 rounded-lg' id='password' />
-        <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg  uppercase hover:opacity-95 disabled::opacity-80'>{loading?"Loading...":"Singup"}</button>
+        <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg  uppercase hover:opacity-95 disabled::opacity-80'>{loading?"Loading...":"Sing Up"}</button>
       </form>
       <div className='flex gap-2 mt-5'>
         <p>Have an account ? </p>
         <Link className='text-blue-700' to={"/sign-in"}> Sign In</Link>
       </div>
-      
+      {error && <p className='text-red-500 mt-5'>{error}</p>}
     </div>
   )
 }
