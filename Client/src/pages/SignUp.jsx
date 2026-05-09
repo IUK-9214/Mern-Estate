@@ -51,7 +51,7 @@ navigate('/sign-in');
         <input  onChange={HandleChange}  type="text" placeholder='UserName' className='border p-3 rounded-lg' id='username' />
         <input onChange={HandleChange}  type="email" placeholder='Email' className='border p-3 rounded-lg' id='email' />
         <input  onChange={HandleChange} type="password" placeholder='Password' className='border p-3 rounded-lg' id='password' />
-        <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg  uppercase hover:opacity-95 disabled::opacity-80'>{loading?"Loading...":"Sing Up"}</button>
+        <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg  uppercase hover:opacity-95 disabled::opacity-80'>{loading?"Loading...":"Sign Up"}</button>
       </form>
       <div className='flex gap-2 mt-5'>
         <p>Have an account ? </p>
