@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
-
+import { useDispatch, useSelector } from 'react-redux';
+import { signInStart,signInSuccess,signInFaluire } from '../redux/user/userSlice';
 
 function Signin() {
 
   const [FormData,setFormData]=useState({})
-  const [error ,setError]=useState(null);
-  const  [loading,setLoading]=useState(false)
+ const {loading,error}=useSelector((state.user))
 const navigate =useNavigate();
+const dispatch =useDispatch();
 
   const HandleChange=(e)=>{
     setFormData({
@@ -18,7 +19,7 @@ const navigate =useNavigate();
 const HandleSubmit=async(e)=>{
   e.preventDefault();
  try {
-   setLoading(true)
+   dispatch(signInStart())
 const res =await fetch('/api/signin',{
   method:'POST',
   headers:{
@@ -28,16 +29,13 @@ const res =await fetch('/api/signin',{
 });
 const data=await res.json();
 if(data.success===false){
-  setLoading(false)
-  setError(data.message);
+ dispatch(signInFaluire(data.message)); 
   return;
 }
-setLoading(false)
-setError(null)
+dispatch(signInSuccess(data));
 navigate('/');
  } catch (error) {
-  setLoading(false);
-  setError(error.message); 
+ dispatch (signInFaluire(error.message)); 
  }
 }
 
