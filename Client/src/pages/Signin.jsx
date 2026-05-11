@@ -6,7 +6,7 @@ import { signInStart,signInSuccess,signInFaluire } from '../redux/user/userSlice
 function Signin() {
 
   const [FormData,setFormData]=useState({})
- const {loading,error}=useSelector((state.user))
+ const {loading,error}=useSelector((state)=>state.user)
 const navigate =useNavigate();
 const dispatch =useDispatch();
 
