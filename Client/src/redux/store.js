@@ -8,7 +8,7 @@ const rootReducer=combineReducers({user:userReducer})
 
 const persistConfig ={
   key:"root",
-  Storage,
+  storage,
   version:1,
 }
 
