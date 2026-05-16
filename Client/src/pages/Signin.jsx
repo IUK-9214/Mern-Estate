@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { signInStart,signInSuccess,signInFaluire } from '../redux/user/userSlice';
+import Oath from '../Component/Oath';
 
 function Signin() {
 
@@ -49,6 +50,7 @@ navigate('/');
         <input onChange={HandleChange}  type="email" placeholder='Email' className='border p-3 rounded-lg' id='email' />
         <input  onChange={HandleChange} type="password" placeholder='Password' className='border p-3 rounded-lg' id='password' />
         <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg  uppercase hover:opacity-95 disabled::opacity-80'>{loading?"Loading...":"Sign In"}</button>
+      <Oath/>
       </form>
       <div className='flex gap-2 mt-5'>
         <p>Do not have an account ? </p>
