@@ -1,13 +1,30 @@
 import React from 'react'
-import {getAuth, GoogleAuthProvider} from 'firebase/auth'
+import {getAuth, GoogleAuthProvider, signInWithPopup} from 'firebase/auth'
+import {app} from "../firebase"
+import {useDispatch} from "react-redux"
+import { signInSuccess } from '../redux/user/userSlice'
+
 
 function Oath() {
 
+  const dispatch = useDispatch()
 const handleGoogleClick =async ()=>{
 try {
     
      const provider=new GoogleAuthProvider()
-     const auth=getAuth()
+     const auth=getAuth(app)
+     const result =await signInWithPopup(auth,provider)
+     
+     const res =await fetch("/api/auth/google",{
+      method:"post",
+      headers:{
+        "Content-Type":"application/json",
+      },
+      body:JSON.Stringify({name:result.user.displayName,email:result.user.email,photo:result.user.photoURL}),
+
+     })
+     const data =await res.json()
+     dispatch(signInSuccess(data));
 
 } catch (error) {
 console.log("Not logged-in through Google ",error)    
