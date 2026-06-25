@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import api from '../api/axios'
 import { logout, updateUserSuccess } from '../redux/user/userSlice.js'
  import { persistor } from '../redux/store.js' 
+ import { Link } from 'react-router-dom'
 
 function Profile() {
 
@@ -114,6 +115,11 @@ const handleDeleteAccount = async () => {
           className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>
           {loading ? "Updating..." : "Update"}
         </button>
+        <Link
+        to={'/create-listing'}
+        className='bg-green-700 text-white rounded-lg uppercase p-3 text-center hover:opacity-95'>
+          Create listing 
+        </Link>
 
       </form>
 

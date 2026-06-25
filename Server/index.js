@@ -24,7 +24,9 @@ ConnectDB()
 
 
 app.use(cookieParser())
-app.use('/api', authrouter) 
+app.use('/api', authrouter)
+app.use('/api', listingrouter)
+
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
