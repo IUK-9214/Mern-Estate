@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import ConnectDB from './ConnectDataBase/ConnectDB.js'
 import authrouter from './Router/authrouter.js'
+import ListRouting from './Router/ListRouting.js'
 import cookieParser from 'cookie-parser'  
 
 dotenv.config()
@@ -25,7 +26,7 @@ ConnectDB()
 
 app.use(cookieParser())
 app.use('/api', authrouter)
-app.use('/api', listingrouter)
+app.use('/api', ListRouting)
 
 
 app.use((err, req, res, next) => {
