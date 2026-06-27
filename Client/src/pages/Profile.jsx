@@ -35,7 +35,7 @@ function Profile() {
 
       const res = await api.post("/profileimage", {
         imageUrl: imageUrl,
-        userId: currentuser._id,   
+  
       })
 
       dispatch(updateUserSuccess(res.data.user))  

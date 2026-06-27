@@ -21,10 +21,10 @@ app.use((req, res, next) => {
 })
 
 app.use(express.json({limit: '10mb'}))  
+app.use(cookieParser())
 ConnectDB()
 
 
-app.use(cookieParser())
 app.use('/api', authrouter)
 app.use('/api', ListRouting)
 
