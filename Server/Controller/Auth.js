@@ -3,6 +3,7 @@ import bcryptjs from 'bcryptjs'
 import { errorHandler } from "../utils/error.js"
 import jwt from "jsonwebtoken"
 import cloudinary from "../config/cloudinary.js"
+import Listing from "../Models/listingModel.js"
 
 // ── cookie options reused everywhere ──
 const cookieOptions = {
@@ -140,3 +141,23 @@ export const signOut = (req, res, next) => {
         next(error)
     }
 }
+
+
+ export const getUserListings = async (req, res,next)=>{
+    try {
+        if (req.user.id!==req.params.id){
+            try {
+                const listings = await Listing.find({userRef:req.params.id});
+                res.status(200).json(listings);
+                
+            } catch (error) {
+                next(error)
+            }
+        }else{
+            return next(errorHandler(404,"you can only view own listings ! "));
+        }
+
+    } catch (error) {
+        return next(errorHandler(401,"you can only view your own listings"))
+    }
+ }

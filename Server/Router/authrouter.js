@@ -1,5 +1,5 @@
 import express from 'express'
-import { Singup,SingIn, Google, uploadProfileImage, deleteAccount, signOut } from '../Controller/Auth.js'
+import { Singup,SingIn, Google, uploadProfileImage, deleteAccount, signOut, getUserListings } from '../Controller/Auth.js'
 import { verifyToken } from '../Middleware/verifyToken.js'
 
 const router=express.Router()
@@ -13,6 +13,7 @@ router.post("/auth/google",Google)
 router.post('/profileimage', verifyToken, uploadProfileImage)
 router.delete('/delete/:id', verifyToken, deleteAccount)   
 router.get('/signout', signOut) 
+router.get('/listing/:id',verifyToken,getUserListings)
 
 
 
