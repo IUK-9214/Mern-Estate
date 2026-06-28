@@ -4,6 +4,7 @@ import {
   uploadListingImage,
   deleteListing,
   getListing,
+  getListings,
   updateListing,
 } from '../Controller/ListingController.js';
 import { verifyToken } from '../Middleware/verifyToken.js';
@@ -14,6 +15,7 @@ router.post('/uploadimage', verifyToken, uploadListingImage);
 router.post('/listing', verifyToken, CreateListing);
 router.delete('/listing/delete/:id', verifyToken, deleteListing);
 router.get('/listing/get/:id', getListing);                      
-router.put('/listing/update/:id', verifyToken, updateListing);    
+router.put('/listing/update/:id', verifyToken, updateListing); 
+router.get('/get',getListings)   
 
 export default router;

@@ -26,15 +26,13 @@ export default function Listing() {
   const [contact, setContact] = useState(false);
 
   const params = useParams();
-
- 
   const { currentuser } = useSelector((state) => state.user);
 
   useEffect(() => {
+    if (!params.listingId) return;
     const fetchListing = async () => {
       try {
         setLoading(true);
-        
         const res = await api.get(`/listing/get/${params.listingId}`);
         setListing(res.data);
         setLoading(false);
@@ -135,7 +133,7 @@ export default function Listing() {
               </li>
             </ul>
 
-            
+            {/* Only show Contact button if logged in and not the owner */}
             {currentuser && listing.userRef !== currentuser._id && !contact && (
               <button
                 onClick={() => setContact(true)}
@@ -144,6 +142,8 @@ export default function Listing() {
                 Contact landlord
               </button>
             )}
+
+            {/* Show Contact form after button is clicked */}
             {contact && <Contact listing={listing} />}
           </div>
         </div>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import api from '../api/axios';
 
 export default function Contact({ listing }) {
@@ -13,7 +12,6 @@ export default function Contact({ listing }) {
   useEffect(() => {
     const fetchLandlord = async () => {
       try {
-        
         const res = await api.get(`/user/${listing.userRef}`);
         setLandlord(res.data);
       } catch (error) {
@@ -22,6 +20,14 @@ export default function Contact({ listing }) {
     };
     fetchLandlord();
   }, [listing.userRef]);
+
+  const handleSendMessage = () => {
+    if (!message.trim()) return;
+
+    // ✅ Opens Gmail compose in a new browser tab
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(landlord.email)}&su=${encodeURIComponent(`Regarding ${listing.name}`)}&body=${encodeURIComponent(message)}`;
+    window.open(gmailUrl, '_blank');
+  };
 
   return (
     <>
@@ -41,12 +47,14 @@ export default function Contact({ listing }) {
             placeholder='Enter your message here...'
             className='w-full border p-3 rounded-lg'
           ></textarea>
-          <Link
-            to={`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message}`}
-            className='bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95'
+
+          <button
+            onClick={handleSendMessage}
+            disabled={!message.trim()}
+            className='bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95 disabled:opacity-60'
           >
             Send Message
-          </Link>
+          </button>
         </div>
       )}
     </>
