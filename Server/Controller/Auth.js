@@ -5,11 +5,11 @@ import jwt from "jsonwebtoken"
 import cloudinary from "../config/cloudinary.js"
 import Listing from "../Models/listingModel.js"
 
-// ── cookie options reused everywhere ──
+
 const cookieOptions = {
     httpOnly: true,
-    secure: false,        // ← false for localhost (http), set true in production
-    sameSite: 'lax',      // ← allows cookie to be sent on localhost cross-origin
+    secure: false,        
+    sameSite: 'lax',    
 }
 
 export const Singup = async (req, res, next) => {
@@ -143,21 +143,15 @@ export const signOut = (req, res, next) => {
 }
 
 
- export const getUserListings = async (req, res,next)=>{
+ export const getUserListings = async (req, res, next) => {
     try {
-        if (req.user.id!==req.params.id){
-            try {
-                const listings = await Listing.find({userRef:req.params.id});
-                res.status(200).json(listings);
-                
-            } catch (error) {
-                next(error)
-            }
-        }else{
-            return next(errorHandler(404,"you can only view own listings ! "));
+        if (req.user.id === req.params.id) {
+            const listings = await Listing.find({ userRef: req.params.id });
+            res.status(200).json(listings);
+        } else {
+            return next(errorHandler(403, "You can only view your own listings"));
         }
-
     } catch (error) {
-        return next(errorHandler(401,"you can only view your own listings"))
+        next(error);
     }
- }
+}
