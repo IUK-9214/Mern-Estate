@@ -13,7 +13,7 @@ export default function Search() {
     parking: false,
     furnished: false,
     offer: false,
-    sort: 'created_at',
+    sort: 'createdAt',
     order: 'desc',
   });
 
@@ -47,7 +47,7 @@ export default function Search() {
         parking: parkingFromUrl === 'true',
         furnished: furnishedFromUrl === 'true',
         offer: offerFromUrl === 'true',
-        sort: sortFromUrl || 'created_at',
+        sort: sortFromUrl || 'createdAt',
         order: orderFromUrl || 'desc',
       });
     }
@@ -75,7 +75,7 @@ export default function Search() {
   }, [location.search]);
 
   const handleChange = (e) => {
-    if (['all', 'rent', 'sale'].includes(e.target.id)) {
+    if (['all', 'rent', 'sell'].includes(e.target.id)) {  // ✅ 'sell' not 'sale'
       setSidebardata({ ...sidebardata, type: e.target.id });
     }
 
@@ -91,7 +91,7 @@ export default function Search() {
     }
 
     if (e.target.id === 'sort_order') {
-      const sort = e.target.value.split('_')[0] || 'created_at';
+      const sort = e.target.value.split('_')[0] || 'createdAt';
       const order = e.target.value.split('_')[1] || 'desc';
       setSidebardata({ ...sidebardata, sort, order });
     }
@@ -100,13 +100,15 @@ export default function Search() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const urlParams = new URLSearchParams();
-    urlParams.set('searchTerm', sidebardata.searchTerm);
-    urlParams.set('type', sidebardata.type);
-    urlParams.set('parking', sidebardata.parking);
-    urlParams.set('furnished', sidebardata.furnished);
-    urlParams.set('offer', sidebardata.offer);
+
+    if (sidebardata.searchTerm) urlParams.set('searchTerm', sidebardata.searchTerm);
+    if (sidebardata.type !== 'all') urlParams.set('type', sidebardata.type);
+    if (sidebardata.parking) urlParams.set('parking', sidebardata.parking);
+    if (sidebardata.furnished) urlParams.set('furnished', sidebardata.furnished);
+    if (sidebardata.offer) urlParams.set('offer', sidebardata.offer);
     urlParams.set('sort', sidebardata.sort);
     urlParams.set('order', sidebardata.order);
+
     navigate(`/search?${urlParams.toString()}`);
   };
 
@@ -144,7 +146,7 @@ export default function Search() {
 
           <div className='flex gap-2 flex-wrap items-center'>
             <label className='font-semibold'>Type:</label>
-            {['all', 'rent', 'sale'].map((t) => (
+            {['all', 'rent', 'sell'].map((t) => (  // ✅ 'sell' not 'sale'
               <div key={t} className='flex gap-2'>
                 <input
                   type='checkbox'
@@ -153,7 +155,9 @@ export default function Search() {
                   onChange={handleChange}
                   checked={sidebardata.type === t}
                 />
-                <span>{t === 'all' ? 'Rent & Sale' : t.charAt(0).toUpperCase() + t.slice(1)}</span>
+                <span>
+                  {t === 'all' ? 'Rent & Sale' : t.charAt(0).toUpperCase() + t.slice(1)}
+                </span>
               </div>
             ))}
             <div className='flex gap-2'>
@@ -188,7 +192,7 @@ export default function Search() {
             <label className='font-semibold'>Sort:</label>
             <select
               onChange={handleChange}
-              defaultValue={'created_at_desc'}
+              defaultValue={'createdAt_desc'}
               id='sort_order'
               className='border rounded-lg p-3'
             >

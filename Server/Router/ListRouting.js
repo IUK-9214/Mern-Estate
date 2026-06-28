@@ -14,8 +14,12 @@ const router = express.Router();
 router.post('/uploadimage', verifyToken, uploadListingImage);
 router.post('/listing', verifyToken, CreateListing);
 router.delete('/listing/delete/:id', verifyToken, deleteListing);
+
 router.get('/listing/get/:id', getListing);                      
+
 router.put('/listing/update/:id', verifyToken, updateListing); 
-router.get('/get',getListings)   
+
+router.get('/listing/get',getListings)   
+
 
 export default router;

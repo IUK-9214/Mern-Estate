@@ -7,8 +7,6 @@ import { logout, updateUserSuccess } from '../redux/user/userSlice.js'
 import { persistor } from '../redux/store.js'
 import { Link } from 'react-router-dom'
 
-
-
 function Profile() {
 
   const { currentuser } = useSelector(state => state.user)
@@ -49,7 +47,6 @@ function Profile() {
       setLoading(false)
     }
   }
-
 
   const handleSignOut = async () => {
     try {
@@ -93,7 +90,7 @@ function Profile() {
   const handleShowListings = async () => {
     try {
       setError(null)
-      const res = await api.get(`/listing/${currentuser._id}`)
+      const res = await api.get(`/user/${currentuser._id}/listings`)  // ✅ fixed
       setListings(res.data)
     } catch (error) {
       setError("Error showing listings")
@@ -108,7 +105,6 @@ function Profile() {
       setError(error?.response?.data?.message || "Failed to delete listing")
     }
   }
-
 
   return (
     <div className='p-3 max-w-lg mx-auto'>
@@ -191,7 +187,6 @@ function Profile() {
                 >
                   Delete
                 </button>
-                
                 <button
                   onClick={() => navigate(`/update-listing/${listing._id}`)}
                   className='text-green-700 uppercase'
